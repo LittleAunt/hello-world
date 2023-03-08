@@ -1,14 +1,15 @@
-POST /wp-admin/admin-ajax.php HTTP/1.1
+POST /wp-login.php HTTP/1.1
 Host: metapress.htb
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0
-Accept: application/json, text/plain, */*
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
 Accept-Language: en-US,en;q=0.5
 Accept-Encoding: gzip, deflate
+Referer: http://metapress.htb/wp-login.php
 Content-Type: application/x-www-form-urlencoded
-Content-Length: 141
+Content-Length: 99
 Origin: http://metapress.htb
 Connection: close
-Referer: http://metapress.htb/events/
 Cookie: PHPSESSID=a83jpbg8tovuglvoe9bdd1vea5; wordpress_test_cookie=WP%20Cookie%20check
+Upgrade-Insecure-Requests: 1
 
-action=bookingpress_front_save_appointment_booking&nonce=a85a0c3bfa&query_vars={"tax_query":{"0":{"field":"term_taxonomy_id","terms":["abc*"]}}}
+log=admin&pwd=12345&wp-submit=Log+In&redirect_to=http%3A%2F%2Fmetapress.htb%2Fwp-admin%2F&testcookie=1
